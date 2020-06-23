@@ -1,0 +1,1 @@
+INSERT INTO ZIP_CODE (zip_code, zip_type, pref, city, town, name) VALUES ('1100001', 1, '東京都', '台東区', '谷中', null);
