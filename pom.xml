@@ -73,6 +73,10 @@
       <artifactId>quarkus-resteasy-jackson</artifactId>
       <version>1.5.2.Final</version>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-container-image-docker</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
