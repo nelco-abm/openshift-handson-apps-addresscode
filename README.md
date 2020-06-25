@@ -33,13 +33,22 @@ native executableは次のコマンドで作成できます。　　
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
 
-### Dockerイメージを作成、pushする
+### Dockerイメージを作成、pushする-mavenを使った方法
 
 [QUARKUS - CONTAINER IMAGES](https://quarkus.io/guides/container-image)により、
-Quarkusのビルドとコンテナイメージの作成、pushまでを一元的に行う
+mavenコマンドでQuarkusのビルドとコンテナイメージの作成、pushまでを一元的に行う
 
 ```shell
 sudo ./mvnw clean package -Dquarkus.container-image.build=true  -Dquarkus.container-image.push=true -Dquarkus.container-image.username=forhandson -Dquarkus.container-image.password=<password>
+```
+
+### Dockerイメージを作成、pushする-dockerを使った方法
+
+`Dockerfile.multistage` ファイルを用いて、Dockerイメージの作成中に
+mavenによるquarkusのビルド、dockerイメージ化まで行う
+
+```shell
+sudo docker build -f src/main/docker/Dockerfile.multistage -t forhandson.azurecr.io/addresscode-handson/addresscode-search:1.0-dev .
 ```
 
 ## 各種機能について
