@@ -46,7 +46,7 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jdbc-postgresql</artifactId>
-      <version>1.5.2.Final</version>
+      <version>1.6.0.Final</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
