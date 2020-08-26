@@ -71,7 +71,7 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-jackson</artifactId>
-      <version>1.6.0.Final</version>
+      <version>1.7.1.Final</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
