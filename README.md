@@ -2,6 +2,16 @@
 
 ## 起動方法
 
+### 実行前準備
+
+`.devcontainer` 環境で起動している場合、DBのIPアドレスはlocalhostではなく、docker-composeで規定したホスト名になります。
+したがって取得、環境変数として設定するか、 `application.properties` を書き換えます。
+
+```
+# 一例
+$ export POSTGRESQL_SERVICE_HOST=postgres
+```
+
 ### dev modeでアプリケーションを起動する
 
 ライブコーディングを行うにはdev modeでアプリケーションを起動してください。　　
