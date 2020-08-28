@@ -1,5 +1,5 @@
 # Update the VARIANT arg in devcontainer.json to pick a Java version >= 11
-ARG VARIANT=11
+ARG VARIANT=14
 FROM openjdk:${VARIANT}-jdk-buster
 
 # Options for setup script
