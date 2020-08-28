@@ -6,7 +6,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import org.slf4j.Logger;
+import org.jboss.logging.Logger;
 
 @Provider
 public class ExceptionHandler implements ExceptionMapper<Exception> {
