@@ -32,7 +32,7 @@ services:
     restart: always
 
   pgadmin4:
-    image: dpage/pgadmin4:4.23
+    image: dpage/pgadmin4:4.25
     container_name: pgadmin4
     ports:
       - 8000:80
