@@ -1,17 +1,24 @@
 package jp.co.nissho_ele.handson.controller;
 
-import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.Test;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
+
+import org.junit.jupiter.api.Test;
+
+import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 public class MonitoringResourceTest {
 
     @Test
-    public void testHelloEndpoint() {
+    public void testProbeEndpoint() {
         given().when().get("/probe").then().statusCode(200).body(is("success"));
+    }
+
+    @Test
+    public void testDistructEndpoint() {
+        given().when().get("/probe/distruct").then().statusCode(200);
+        given().when().get("/probe").then().statusCode(503).body(is("error"));
     }
 
 }
