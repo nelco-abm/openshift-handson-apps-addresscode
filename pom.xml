@@ -11,10 +11,10 @@
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus-plugin.version>1.7.1.Final</quarkus-plugin.version>
+    <quarkus-plugin.version>1.8.3.Final</quarkus-plugin.version>
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>1.7.1.Final</quarkus.platform.version>
+    <quarkus.platform.version>1.8.3.Final</quarkus.platform.version>
     <surefire-plugin.version>2.22.2</surefire-plugin.version>
   </properties>
   <dependencyManagement>
@@ -46,7 +46,7 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jdbc-postgresql</artifactId>
-      <version>1.7.1.Final</version>
+      <version>${quarkus-plugin.version}</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -61,17 +61,18 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-test-h2</artifactId>
-      <version>1.7.1.Final</version>
+      <version>${quarkus-plugin.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-logging-gelf</artifactId>
+      <version>${quarkus-plugin.version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-jackson</artifactId>
-      <version>1.7.1.Final</version>
+      <version>${quarkus-plugin.version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -80,15 +81,28 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-kubernetes-config</artifactId>
+      <version>${quarkus-plugin.version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-jsonb</artifactId>
+      <version>${quarkus-plugin.version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5-mockito</artifactId>
+      <version>${quarkus-plugin.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-micrometer</artifactId>
+      <version>${quarkus-plugin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+      <version>1.5.5</version>
     </dependency>
   </dependencies>
   <build>
