@@ -28,7 +28,7 @@ public class AddressController {
         // 独自メトリクスを追加
         this.registry = registry;
         this.counter = Counter.builder("counter").baseUnit("beans").description("request counter")
-                .tags("usage", "handson-demo").register(registry);
+                .tags("usage", "handson-demo").register(this.registry);
     }
 
     @Inject
@@ -46,7 +46,8 @@ public class AddressController {
     public List<AddressModel> postalCode(@PathParam String code) {
 
         List<AddressModel> result = null;
-        result = service.getAddressName(code);
+        // result = service.getAddressName(code);
+        result = service.getAddressNameNoCache(code);
         if (result == null) {
             throw new RuntimeException();
         }

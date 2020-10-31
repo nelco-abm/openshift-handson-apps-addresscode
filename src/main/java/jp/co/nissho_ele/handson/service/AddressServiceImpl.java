@@ -11,6 +11,9 @@ import javax.inject.Inject;
 import jp.co.nissho_ele.handson.model.AddressModel;
 import jp.co.nissho_ele.handson.repository.AddressRepository;
 
+/**
+ * AddressServiceImpl
+ */
 @ApplicationScoped
 public class AddressServiceImpl implements AddressService {
 
@@ -23,17 +26,21 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void loadAddressCode() {
         List<AddressModel> list = addressRepository.findAll();
-        map = list.stream().parallel()
-            .collect(Collectors.groupingBy(AddressModel::getZip_code));        
+        map = list.stream().parallel().collect(Collectors.groupingBy(AddressModel::getZip_code));
     }
 
     @Override
-    public List<AddressModel> getAddressName(String postalcode) throws RuntimeException {
-        if(this.map == null || this.map.isEmpty()){
+    public List<AddressModel> getAddressName(String postalcode) {
+        if (this.map == null || this.map.isEmpty()) {
             System.out.println("住所データが破損しています");
             throw new RuntimeException("住所データが破損しています");
-        }        
+        }
         return map.get(postalcode);
+    }
+
+    @Override
+    public List<AddressModel> getAddressNameNoCache(String postalcode) {
+        return addressRepository.findNoCache(postalcode);
     }
 
 }
