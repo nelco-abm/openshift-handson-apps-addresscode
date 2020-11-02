@@ -21,4 +21,4 @@ COPY --chown=1001:root target/*-runner /work/application
 EXPOSE 8080
 USER 1001
 
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0", "-Dcom.sun.management.jmxremote", "-Dcom.sun.management.jmxremote.port=1898", "-Dcom.sun.management.jmxremote.rmi.port=1898", "-Djava.rmi.server.hostname=0.0.0.0", "-Dcom.sun.management.jmxremote.ssl=false", "-Dcom.sun.management.jmxremote.authenticate=false", "-Dcom.sun.management.jmxremote.local.only=false", "-Djava.util.logging.manager=org.jboss.logmanager.LogManager" ]
