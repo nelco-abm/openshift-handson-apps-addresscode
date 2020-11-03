@@ -2,6 +2,8 @@ package jp.co.nissho_ele.jfr;
 
 import java.io.IOException;
 
+import javax.annotation.Priority;
+import javax.interceptor.Interceptor;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -10,7 +12,10 @@ import javax.ws.rs.ext.Provider;
 
 import org.jboss.resteasy.core.ResourceMethodInvoker;
 
+// メモ: ContainerRequestFilter, ContainerResponseFilterはInterceptorと似たような働きをする。
+// 特定のREST-API通信があった前後にfilterの内容が呼ばれて、そこでJFRによるカスタムEvent(ここではJaxRsInvocationEvent)の記録の開始、終了を行う。
 @Provider
+@Priority(Interceptor.Priority.APPLICATION)
 public class FlightRecorderFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
     @Override

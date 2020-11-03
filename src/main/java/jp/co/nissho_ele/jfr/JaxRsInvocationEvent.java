@@ -16,7 +16,7 @@ import jdk.jfr.StackTrace;
 @StackTrace(false)
 class JaxRsInvocationEvent extends Event {
 
-    static final String NAME = "dev.morling.jfr.JaxRsInvocation";
+    static final String NAME = "dev.jfr.JaxRsInvocation";
 
     @Label("Resource Method")
     public String method;

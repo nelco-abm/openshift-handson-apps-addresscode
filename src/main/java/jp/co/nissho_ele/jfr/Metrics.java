@@ -1,5 +1,7 @@
 package jp.co.nissho_ele.jfr;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -10,6 +12,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
+import jdk.jfr.Configuration;
 import jdk.jfr.FlightRecorder;
 import jdk.jfr.consumer.RecordingStream;
 
@@ -30,24 +33,40 @@ public class Metrics {
     }
 
     public void onStartup(@Observes StartupEvent se) {
-        recordingStream = new RecordingStream();
-        recordingStream.enable(JaxRsInvocationEvent.NAME);
+        try {
+            Configuration c = Configuration.getConfiguration("default");
 
-        recordingStream.onEvent(JaxRsInvocationEvent.NAME, event -> {
+            recordingStream = new RecordingStream(c);
+            recordingStream.enable(JaxRsInvocationEvent.NAME);
+            recordingStream.onEvent(JaxRsInvocationEvent.NAME, event -> {
 
-            String path = event.getString("path").replaceAll("(\\/)([0-9]+)(\\/?)", "$1{param}$3");
-            String method = event.getString("method");
-            String name = path + "-" + method;
+                String path = event.getString("path").replaceAll("(\\/)([0-9]+)(\\/?)", "$1{param}$3");
+                String method = event.getString("method");
+                String name = path + "-" + method;
 
-            System.out.println("#### Event triggered " + name + event.getDuration());
+                System.out.println("#### Event triggered " + name + ":" + event.getDuration());
 
-            // 名前 name
-            // 時間 event.getDuration().toNanos()
-            // 説明 "Metrics for " + path + " (" + method + ")"
-            AtomicReference<Long> obj = new AtomicReference<>(event.getDuration().toNanos());
-            registry.more().timeGauge(name, Tags.of("method", method), obj, TimeUnit.NANOSECONDS, AtomicReference::get);
-        });
-        recordingStream.startAsync();
+                // eventの処理時間合計をtimeGaugeとして出力する
+                AtomicReference<Long> obj = new AtomicReference<>(event.getDuration().toNanos());
+                registry.more().timeGauge(name, Tags.of("method", method), obj, TimeUnit.NANOSECONDS,
+                        AtomicReference::get);
+            });
+            recordingStream.enable(DatabaseRWInvocationEvent.NAME);
+            recordingStream.onEvent(DatabaseRWInvocationEvent.NAME, event -> {
+                String method = event.getString("javaMethod");
+                String name = method;
+                System.out.println("#### Event triggered " + name + ":" + event.getDuration());
+
+                // eventの処理時間合計をtimeGaugeとして出力する
+                AtomicReference<Long> obj = new AtomicReference<>(event.getDuration().toNanos());
+                registry.more().timeGauge(name, Tags.of("method", method), obj, TimeUnit.NANOSECONDS,
+                        AtomicReference::get);
+            });
+            recordingStream.startAsync();
+        } catch (IOException | ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void stop(@Observes ShutdownEvent se) {
