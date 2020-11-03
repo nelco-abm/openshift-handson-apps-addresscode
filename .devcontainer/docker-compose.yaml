@@ -10,6 +10,7 @@ services:
       - USERNAME=vscode
     ports:
       - "8080:8080"
+      - "1898:1898"
     volumes:
       - $HOME/.ssh:/home/vscode/.ssh
       - $HOME/.gitconfig:/home/vscode/.gitconfig
@@ -22,7 +23,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - pglog:/var/log/postgresql      
+      - pglog:/var/log/postgresql
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
