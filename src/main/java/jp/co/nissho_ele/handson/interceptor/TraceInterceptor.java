@@ -20,13 +20,20 @@ public class TraceInterceptor {
         // メソッド実行前
         preProcess(ic, event);
 
-        // 次のインターセプターチェーンの実行
-        Object result = ic.proceed();
+        try {
+            // 次のインターセプターチェーンの実行
+            Object result = ic.proceed();
 
-        // メソッドの実行後
-        postProcess(ic, event);
+            // メソッドの実行後
+            postProcess(ic, event);
 
-        return result;
+            return result;
+        } catch (Exception ex) {
+            // 例外処理
+            System.out.println("exceptions happened");
+            postProcess(ic, event);
+            throw ex;
+        }
     }
 
     private void preProcess(InvocationContext ic, DatabaseRWInvocationEvent event) {

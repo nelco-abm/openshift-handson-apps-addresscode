@@ -1,5 +1,8 @@
 package jp.co.nissho_ele.jfr;
 
+import java.io.Closeable;
+import java.io.IOException;
+
 import jdk.jfr.Category;
 import jdk.jfr.Description;
 import jdk.jfr.Event;
@@ -18,4 +21,5 @@ public class DatabaseRWInvocationEvent extends Event {
 
     @Label("Java Method")
     public String javaMethod;
+
 }

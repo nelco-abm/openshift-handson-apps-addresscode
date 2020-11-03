@@ -46,6 +46,7 @@ public class AddressRepository {
     public List<AddressModel> findNoCache(String zip_code) {
         Query query = em.createQuery("select a from AddressModel a where zip_code ='" + zip_code + "'");
         query.setHint("org.hibernate.cacheable", Boolean.FALSE);
+        query.setHint("javax.persistence.query.timeout", 60000);
         return Collections.checkedList(query.getResultList(), AddressModel.class);
     }
 

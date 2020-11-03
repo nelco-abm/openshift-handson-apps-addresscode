@@ -2,6 +2,7 @@ package jp.co.nissho_ele.jfr;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -10,10 +11,13 @@ import javax.enterprise.event.Observes;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
+import io.micrometer.core.instrument.Timer;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import jdk.jfr.Configuration;
 import jdk.jfr.FlightRecorder;
+import jdk.jfr.consumer.RecordedFrame;
+import jdk.jfr.consumer.RecordedStackTrace;
 import jdk.jfr.consumer.RecordingStream;
 
 @ApplicationScoped
@@ -46,10 +50,10 @@ public class Metrics {
 
                 System.out.println("#### Event triggered " + name + ":" + event.getDuration());
 
-                // eventの処理時間合計をtimeGaugeとして出力する
-                AtomicReference<Long> obj = new AtomicReference<>(event.getDuration().toNanos());
-                registry.more().timeGauge(name, Tags.of("method", method), obj, TimeUnit.NANOSECONDS,
-                        AtomicReference::get);
+                // eventの処理時間合計をMicrometerのメトリクスとして出力する
+                Timer timer = Timer.builder(name).description("a description of what this timer does")
+                        .tags("method", method).register(this.registry);
+                timer.record(event.getDuration().toNanos(), TimeUnit.NANOSECONDS);
             });
             recordingStream.enable(DatabaseRWInvocationEvent.NAME);
             recordingStream.onEvent(DatabaseRWInvocationEvent.NAME, event -> {
@@ -57,13 +61,27 @@ public class Metrics {
                 String name = method;
                 System.out.println("#### Event triggered " + name + ":" + event.getDuration());
 
-                // eventの処理時間合計をtimeGaugeとして出力する
-                AtomicReference<Long> obj = new AtomicReference<>(event.getDuration().toNanos());
-                registry.more().timeGauge(name, Tags.of("method", method), obj, TimeUnit.NANOSECONDS,
-                        AtomicReference::get);
+                RecordedStackTrace rst = event.getStackTrace();
+                if (rst != null) {
+                    // エラー発生時のログスタックも出力が可能
+                    List<RecordedFrame> frames = rst.getFrames();
+                    // System.out.println("Number of frames: " + frames.size());
+                    for (RecordedFrame rf : frames) {
+                        // System.out.println(
+                        // "Method, line number: " + rf.getMethod().getName() + ", " +
+                        // rf.getLineNumber());
+                    }
+                }
+
+                // eventの処理時間合計をMicrometerのメトリクスとして出力する
+                Timer timer = Timer.builder(name).description("a description of what this timer does")
+                        .tags("method", method).register(this.registry);
+                timer.record(event.getDuration().toNanos(), TimeUnit.NANOSECONDS);
             });
             recordingStream.startAsync();
-        } catch (IOException | ParseException e) {
+        } catch (IOException |
+
+                ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
