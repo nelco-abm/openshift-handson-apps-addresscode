@@ -63,11 +63,10 @@ public class Metrics {
                 if (rst != null) {
                     // エラー発生時のログスタックも出力が可能
                     List<RecordedFrame> frames = rst.getFrames();
-                    // System.out.println("Number of frames: " + frames.size());
+                    System.out.println("Number of frames: " + frames.size());
                     for (RecordedFrame rf : frames) {
-                        // System.out.println(
-                        // "Method, line number: " + rf.getMethod().getName() + ", " +
-                        // rf.getLineNumber());
+                        rf.getMethod().getName();
+                        rf.getLineNumber();
                     }
                 }
 
