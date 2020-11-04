@@ -54,7 +54,7 @@ public class Metrics {
                         .publishPercentiles(0.5, 0.95) // median and 95th percentile
                         .publishPercentileHistogram() // create percentile histogram
                         .minimumExpectedValue(Duration.ofMillis(1)) // 最低1ms
-                        .maximumExpectedValue(Duration.ofSeconds(1000)) // 遅くても1秒...
+                        .maximumExpectedValue(Duration.ofSeconds(15000)) // 最悪の場合、15秒...
                         .tags("method", method).register(this.registry);
                 timer.record(event.getDuration().toNanos(), TimeUnit.NANOSECONDS);
             });
@@ -80,7 +80,7 @@ public class Metrics {
                         .publishPercentiles(0.5, 0.95) // median and 95th percentile
                         .publishPercentileHistogram() // create percentile histogram
                         .minimumExpectedValue(Duration.ofMillis(1)) // 最低1ms
-                        .maximumExpectedValue(Duration.ofSeconds(1000)) // 遅くても1秒...
+                        .maximumExpectedValue(Duration.ofSeconds(15000)) // 最悪の場合、15秒...
                         .tags("method", method).register(this.registry);
                 timer.record(event.getDuration().toNanos(), TimeUnit.NANOSECONDS);
             });
