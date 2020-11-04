@@ -2,6 +2,7 @@ package jp.co.nissho_ele.jfr;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -50,6 +51,10 @@ public class Metrics {
 
                 // eventの処理時間合計をMicrometerのメトリクスとして出力する
                 Timer timer = Timer.builder(name).description("a description of what this timer does")
+                        .publishPercentiles(0.5, 0.95) // median and 95th percentile
+                        .publishPercentileHistogram() // create percentile histogram
+                        .minimumExpectedValue(Duration.ofMillis(1)) // 最低1ms
+                        .maximumExpectedValue(Duration.ofSeconds(1000)) // 遅くても1秒...
                         .tags("method", method).register(this.registry);
                 timer.record(event.getDuration().toNanos(), TimeUnit.NANOSECONDS);
             });
@@ -72,6 +77,10 @@ public class Metrics {
 
                 // eventの処理時間合計をMicrometerのメトリクスとして出力する
                 Timer timer = Timer.builder(name).description("a description of what this timer does")
+                        .publishPercentiles(0.5, 0.95) // median and 95th percentile
+                        .publishPercentileHistogram() // create percentile histogram
+                        .minimumExpectedValue(Duration.ofMillis(1)) // 最低1ms
+                        .maximumExpectedValue(Duration.ofSeconds(1000)) // 遅くても1秒...
                         .tags("method", method).register(this.registry);
                 timer.record(event.getDuration().toNanos(), TimeUnit.NANOSECONDS);
             });
