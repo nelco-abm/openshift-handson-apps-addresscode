@@ -10,7 +10,7 @@ services:
     <<: *common
     ports:
       - "8089:8089"
-    command: -f /locust/locustfile.py --master -H http://172.26.252.30:8080
+    command: -f /locust/locustfile.py --master -H http://addresscode-search-handson-demo.apps.sor-cluster.ndap-nelco.net
 
   locust-slave:
     <<: *common
