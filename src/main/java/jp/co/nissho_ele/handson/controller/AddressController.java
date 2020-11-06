@@ -46,8 +46,8 @@ public class AddressController {
     public List<AddressModel> postalCode(@PathParam String code) {
 
         List<AddressModel> result = null;
-        // result = service.getAddressName(code);
-        result = service.getAddressNameNoCache(code);
+        result = service.getAddressName(code);
+        // result = service.getAddressNameNoCache(code);
         if (result == null) {
             throw new RuntimeException();
         }
