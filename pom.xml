@@ -58,6 +58,7 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-hibernate-orm-panache</artifactId>
+      <version>${quarkus-plugin.version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -78,6 +79,7 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-container-image-docker</artifactId>
+      <version>${quarkus-plugin.version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
