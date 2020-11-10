@@ -126,6 +126,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler-plugin.version}</version>
         <configuration>
+          <release>14</release>
           <source>14</source>
           <target>14</target>
        </configuration>
