@@ -2,7 +2,7 @@
 # This Dockerfile is used in order to build a container that runs the Quarkus application in JVM mode
 ####
 
-FROM adoptopenjdk/openjdk14:jdk-14.0.2_12-ubi-minimal
+FROM adoptopenjdk/openjdk15:jdk15u-ubi-minimal-nightly
 
 ARG RUN_JAVA_VERSION=1.3.8
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
