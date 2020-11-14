@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  x-common: &common
+    image: "locustio/locust:latest"
+    volumes:
+      - ./:/locust
+
+  # docker-compose内なので、localhostにQueryを投げたい場合でもIPアドレスを明示的に指定する
+  locust-master:
+    <<: *common
+    ports:
+      - "8089:8089"
+    command: -f /locust/locustfile.py --master -H http://addresscode-search-handson-demo.apps.sor-cluster.ndap-nelco.net
+
+  locust-slave:
+    <<: *common
+    command: -f /locust/locustfile.py --worker --master-host locust-master
