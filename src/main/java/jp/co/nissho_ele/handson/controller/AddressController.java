@@ -10,8 +10,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.MeterRegistry;
 import jp.co.nissho_ele.handson.model.AddressModel;
 import jp.co.nissho_ele.handson.service.AddressService;
 
@@ -20,16 +18,6 @@ import jp.co.nissho_ele.handson.service.AddressService;
  */
 @Path("address")
 public class AddressController {
-
-    private final MeterRegistry registry;
-    private final Counter counter;
-
-    AddressController(MeterRegistry registry) {
-        // 独自メトリクスを追加
-        this.registry = registry;
-        this.counter = Counter.builder("counter").baseUnit("beans").description("request counter")
-                .tags("usage", "handson-demo").register(this.registry);
-    }
 
     @Inject
     AddressService service;
@@ -51,7 +39,6 @@ public class AddressController {
         if (result == null) {
             throw new RuntimeException();
         }
-        counter.increment();
         return result;
     }
 }
