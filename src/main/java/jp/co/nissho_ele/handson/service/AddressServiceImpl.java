@@ -16,6 +16,7 @@ import jp.co.nissho_ele.handson.repository.AddressRepository;
  * AddressServiceImpl
  */
 @ApplicationScoped
+@DatabaseRWInvokeInterceptor
 public class AddressServiceImpl implements AddressService {
 
     // 住所モデルmap
@@ -24,14 +25,19 @@ public class AddressServiceImpl implements AddressService {
     @Inject
     AddressRepository addressRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadAddressCode() {
         List<AddressModel> list = addressRepository.findAll();
         map = list.stream().parallel().collect(Collectors.groupingBy(AddressModel::getZip_code));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    @DatabaseRWInvokeInterceptor
     public List<AddressModel> getAddressName(String postalcode) {
         if (this.map == null || this.map.isEmpty()) {
             System.out.println("住所データが破損しています");
@@ -41,8 +47,10 @@ public class AddressServiceImpl implements AddressService {
         return list;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    @DatabaseRWInvokeInterceptor
     public List<AddressModel> getAddressNameNoCache(String postalcode) {
         var list = addressRepository.findNoCache(postalcode);
         return list;
