@@ -17,7 +17,7 @@ import jp.co.nissho_ele.handson.repository.AddressRepository;
  */
 @ApplicationScoped
 @DatabaseRWInvokeInterceptor
-public class AddressServiceImpl implements AddressService {
+public class AddressModelServiceImpl implements AddressModelService {
 
     // 住所モデルmap
     private Map<String, List<AddressModel>> map = new ConcurrentHashMap<>();

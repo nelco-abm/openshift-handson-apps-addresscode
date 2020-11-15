@@ -1,6 +1,7 @@
 package jp.co.nissho_ele.handson.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -10,17 +11,20 @@ import javax.ws.rs.core.MediaType;
 
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
-import jp.co.nissho_ele.handson.model.AddressModel;
-import jp.co.nissho_ele.handson.service.AddressService;
+import jp.co.nissho_ele.handson.service.AddressConverterService;
+import jp.co.nissho_ele.handson.service.AddressModelService;
 
 /**
- * 住所コードコントローラー
+ * AddressController
  */
 @Path("address")
 public class AddressController {
 
     @Inject
-    AddressService service;
+    AddressModelService service;
+
+    @Inject
+    AddressConverterService converter;
 
     /**
      * 郵便番号から住所名を取得する
@@ -31,14 +35,16 @@ public class AddressController {
     @GET
     @Path("/postalcode/{code}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<AddressModel> postalCode(@PathParam String code) {
+    public List<String> postalCode(@PathParam String code) {
 
-        List<AddressModel> result = null;
-        // result = service.getAddressName(code);
-        result = service.getAddressNameNoCache(code);
-        if (result == null) {
+        // var addressList = service.getAddressName(code);
+        var addressList = service.getAddressNameNoCache(code);
+        if (addressList == null) {
             throw new RuntimeException();
         }
+        // 住所名を全表記に変換
+        List<String> result = addressList.stream().map(m -> converter.convertAddressName(m))
+                .collect(Collectors.toList());
         return result;
     }
 }

@@ -4,7 +4,7 @@ services:
     build: .
     command: sleep infinity
     environment:
-      - VARIANT=14
+      - VARIANT=15
       - INSTALL_MAVEN=true
       - MAVEN_VERSION=3.6.3
       - USERNAME=vscode

@@ -11,10 +11,10 @@ import io.smallrye.common.constraint.Assert;
 import jp.co.nissho_ele.handson.model.AddressModel;
 
 @QuarkusTest
-public class AddressServiceImplTest {
+public class AddressModelServiceImplTest {
 
     @Inject
-    AddressServiceImpl service;
+    AddressModelServiceImpl service;
 
     @Test
     public void loadAddressCode() {

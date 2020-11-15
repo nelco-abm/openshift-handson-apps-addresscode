@@ -13,11 +13,7 @@ public class AddressControllerTest {
     @Test
     public void testPostalCode() {
         String code = "1100001";
-        given()
-        .pathParam("code", code)
-        .when().get("/address/postalcode/{code}")
-          .then()
-             .statusCode(200)
-             .body("[0].zip_code", Matchers.equalToObject("1100001"));
+        given().pathParam("code", code).when().get("/address/postalcode/{code}").then().statusCode(200).body("[0]",
+                Matchers.equalToObject("東京都台東区谷中"));
     }
 }

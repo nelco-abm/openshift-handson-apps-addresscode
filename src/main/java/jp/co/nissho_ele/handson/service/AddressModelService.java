@@ -7,7 +7,8 @@ import jp.co.nissho_ele.handson.model.AddressModel;
 /**
  * AddressService
  */
-public interface AddressService {
+public interface AddressModelService {
+
     /**
      * 住所コードの初期読み込み
      */

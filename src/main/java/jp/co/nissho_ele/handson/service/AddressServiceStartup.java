@@ -8,15 +8,18 @@ import org.jboss.logging.Logger;
 
 import io.quarkus.runtime.StartupEvent;
 
+/**
+ * AddressServiceStartup
+ */
 @ApplicationScoped
 public class AddressServiceStartup {
 
     private static final Logger LOG = Logger.getLogger(AddressServiceStartup.class);
 
     @Inject
-    AddressService service;
+    AddressModelService service;
 
-    void onStart(@Observes StartupEvent ev){
+    void onStart(@Observes StartupEvent ev) {
         LOG.info("load AddressData");
         service.loadAddressCode();
     }
