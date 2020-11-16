@@ -14,7 +14,6 @@ import io.micrometer.core.instrument.Timer;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import jdk.jfr.Configuration;
-import jdk.jfr.FlightRecorder;
 import jdk.jfr.consumer.RecordedFrame;
 import jdk.jfr.consumer.RecordedStackTrace;
 import jdk.jfr.consumer.RecordingStream;
@@ -28,11 +27,6 @@ public class Metrics {
 
     Metrics(MeterRegistry registry) {
         this.registry = registry;
-    }
-
-    public void registerEvent(@Observes StartupEvent se) {
-        FlightRecorder.register(JaxRsInvocationEvent.class);
-        System.out.println("#### Registered");
     }
 
     public void onStartup(@Observes StartupEvent se) {
@@ -84,6 +78,7 @@ public class Metrics {
                         .tags("method", method).register(this.registry);
                 timer.record(event.getDuration().toNanos(), TimeUnit.NANOSECONDS);
             });
+
             recordingStream.startAsync();
         } catch (IOException |
 
