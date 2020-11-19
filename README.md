@@ -9,22 +9,7 @@
 このプロジェクトはVSCode Remote Container形式のWorkspaceをサポートしています。
 VSCodeで開くことでコンテナ上にJDKを含む開発環境を自動的に構築します。
 
-### ローカルで開発する場合
-
-プロジェクトのルートフォルダ配下に `docker-compose.yaml` が入っているので
-すぐに試すことができます。
-
 ## 起動方法
-
-### 実行前準備
-
-`.devcontainer` 環境で起動している場合、DBのIPアドレスはlocalhostではなく、docker-composeで規定したホスト名になります。
-したがって取得、環境変数として設定するか、 `application.properties` を書き換えます。
-
-```
-# 一例
-$ export POSTGRESQL_SERVICE_HOST=postgres
-```
 
 ### dev modeでアプリケーションを起動する
 
@@ -44,35 +29,34 @@ $ export POSTGRESQL_SERVICE_HOST=postgres
  `java -jar target/handson-1.0-SNAPSHOT-runner.jar`.
 
 ### native executableを作成して起動する
-
-native executableは次のコマンドで作成できます。　　
+  
+native executableは次のコマンドで作成できます。  
 `./mvnw package -Pnative`.
 
-もしもGraalVMをインストールしていない場合コンテナ環境でビルドしたnative executableを実行することも可能です。
-次のコマンドでjarファイルを作成して...
+もしもGraalVMをインストールしていない場合コンテナ環境でビルドしたnative executableを実行することも可能です。  
+次のコマンドでjarファイルを作成して...    
  `sudo ./mvnw package -Pnative -Dquarkus.native.container-build=true`.
 
-次のコマンドでnative executableを実行してください。 　　
+次のコマンドでnative executableを実行してください。   　　  
 `sudo ./target/handson-1.0-SNAPSHOT-runner`
-
-native executablesの構築方法についてもっと知りたい場合は次の[リンク](https://quarkus.io/guides/building-native-image)にアクセスしてください。
-
+  
+native executablesの構築方法についてもっと知りたい場合は次の[リンク](https://quarkus.io/guides/building-native-image)にアクセスしてください。  
+  
 ## 各種機能について
 
-## Quarkusについて
+### Quarkusについて
 
-このプロジェクトはQuarkusを使用しています。
-QuarkusはすーぱーそにっくでさぶあとみっくなJavaフレームワークです。
-もしもQuakursについてさらに知りたい場合、下記のwebsiteをご覧ください。　
-https://quarkus.io/ .
+このプロジェクトはQuarkusを使用しています。  
+QuarkusはすーぱーそにっくでさぶあとみっくなJavaフレームワークです。  
+もしもQuakursについてさらに知りたい場合、下記のwebsiteをご覧ください。　 
+https://quarkus.io/
 
-
-## mvnwについて
-mvnwはmvnのwrapperクラスで指定されたmavenのバージョンで処理を行ってくれます。
-初期状態ではmvnwは入っていなかったので下記コマンドで導入しました。
+### mvnwについて
+mvnwはmvnのwrapperクラスで指定されたmavenのバージョンで処理を行ってくれます。    
+初期状態ではmvnwは入っていなかったので下記コマンドで導入しました。  
 `mvn -N io.takari:maven:0.7.7:wrapper`
 
 ## 謝辞
-このアプリケーションはGunnar Morling氏による下記の解説記事を参考にしながら作成しました。
-この場をお借りしてお礼申し上げます。
+このアプリケーションはGunnar Morling氏による下記の解説記事を参考にしながら作成しました。  
+この場をお借りしてお礼申し上げます。  
 https://www.morling.dev/blog/rest-api-monitoring-with-custom-jdk-flight-recorder-events/
