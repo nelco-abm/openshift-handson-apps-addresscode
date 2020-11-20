@@ -10,11 +10,6 @@ import jp.co.nissho_ele.handson.model.AddressModel;
 public interface AddressModelService {
 
     /**
-     * 住所コードの初期読み込み
-     */
-    public void loadAddressCode();
-
-    /**
      * 住所コード名の取得
      * 
      * @param postalcode 住所コード

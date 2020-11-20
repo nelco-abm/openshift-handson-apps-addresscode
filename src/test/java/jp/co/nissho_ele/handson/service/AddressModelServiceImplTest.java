@@ -17,13 +17,7 @@ public class AddressModelServiceImplTest {
     AddressModelServiceImpl service;
 
     @Test
-    public void loadAddressCode() {
-        service.loadAddressCode();
-    }
-
-    @Test
     public void getAddressName() {
-        service.loadAddressCode();
         List<AddressModel> list = service.getAddressName("1100001");
         Assert.assertFalse(list.isEmpty());
     }

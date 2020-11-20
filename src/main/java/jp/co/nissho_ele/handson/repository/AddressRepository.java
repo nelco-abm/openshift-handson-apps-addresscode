@@ -32,8 +32,12 @@ public class AddressRepository {
      * @param zip_code
      * @return 住所情報
      */
+    @SuppressWarnings("unchecked")
     public List<AddressModel> find(String zip_code) {
-        return AddressModel.find("zip_code", Sort.by("zip_code"), zip_code).list();
+        Query query = em.createQuery("select a from AddressModel a where zip_code ='" + zip_code + "'");
+        query.setHint("org.hibernate.cacheable", Boolean.TRUE);
+        query.setHint("javax.persistence.query.timeout", 60000);
+        return Collections.checkedList(query.getResultList(), AddressModel.class);
     }
 
     /**
