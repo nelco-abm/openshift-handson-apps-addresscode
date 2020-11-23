@@ -13,8 +13,6 @@ import lombok.Setter;
 /**
  * 住所モデル
  */
-
-@Cacheable
 @javax.persistence.Entity
 @Getter
 @Setter
