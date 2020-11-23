@@ -37,8 +37,8 @@ public class AddressController {
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> postalCode(@PathParam String code) {
 
-        var addressList = service.getAddressName(code);
-        // var addressList = service.getAddressNameNoCache(code);
+        // var addressList = service.getAddressName(code);
+        var addressList = service.getAddressNameNoCache(code);
         if (addressList == null) {
             throw new RuntimeException();
         }
