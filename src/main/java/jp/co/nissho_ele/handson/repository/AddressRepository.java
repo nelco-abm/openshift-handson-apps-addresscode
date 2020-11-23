@@ -48,10 +48,15 @@ public class AddressRepository {
      */
     @SuppressWarnings("unchecked")
     public List<AddressModel> findNoCache(String zip_code) {
+        // OCP4.6更新、リファクタリング実施後、無駄に早くなってしまい、このままだとハンズオンのシナリオ通りにいかないことが判明...
+        // 強制的にスリープ処理をいれてみる
+        em.getTransaction().begin();
         Query query = em.createQuery("select a from AddressModel a where zip_code ='" + zip_code + "'");
         query.setHint("org.hibernate.cacheable", Boolean.FALSE);
         query.setHint("javax.persistence.query.timeout", 60000);
-        return Collections.checkedList(query.getResultList(), AddressModel.class);
+        var list = Collections.checkedList(query.getResultList(), AddressModel.class);
+        em.getTransaction().commit();
+        return list;
     }
 
 }

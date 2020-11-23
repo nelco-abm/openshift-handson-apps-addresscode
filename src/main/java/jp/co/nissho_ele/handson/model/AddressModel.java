@@ -1,6 +1,5 @@
 package jp.co.nissho_ele.handson.model;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
