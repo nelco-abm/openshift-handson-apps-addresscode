@@ -1,0 +1,24 @@
+####
+# This Dockerfile is used in order to build a container that runs the Quarkus application in native (no JVM) mode
+#
+# Before building the docker image run:
+#
+# mvn package -Pnative -Dquarkus.native.container-build=true
+#
+# Then, build the image with:
+#
+# docker build -f src/main/docker/Dockerfile.native -t quarkus/handson .
+#
+# Then run the container using:
+#
+# docker run -i --rm -p 8080:8080 quarkus/handson
+#
+###
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.2
+WORKDIR /work/
+COPY --chown=1001:root target/*-runner /work/application
+
+EXPOSE 8080
+USER 1001
+
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0", "-Dcom.sun.management.jmxremote", "-Dcom.sun.management.jmxremote.port=1898", "-Dcom.sun.management.jmxremote.rmi.port=1898", "-Djava.rmi.server.hostname=0.0.0.0", "-Dcom.sun.management.jmxremote.ssl=false", "-Dcom.sun.management.jmxremote.authenticate=false", "-Dcom.sun.management.jmxremote.local.only=false", "-Djava.util.logging.manager=org.jboss.logmanager.LogManager" ]
