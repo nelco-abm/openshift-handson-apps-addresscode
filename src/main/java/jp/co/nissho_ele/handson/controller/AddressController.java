@@ -28,7 +28,7 @@ public class AddressController {
 
     /**
      * 郵便番号から住所名を取得する
-     * 
+     *
      * @param code 郵便番号(ハイフンあり)
      * @return 住所名
      */
